@@ -1,0 +1,32 @@
+syntax = "proto2";
+
+package sfsu;
+option java_package = "sfsu";
+option java_outer_classname = "DatabaseProtos";
+
+// A request intended to be sent from the client to the database server.
+message Request {
+    enum OperationType {
+        GET = 0;
+        PUT = 1;
+        DELETE = 2;
+    };
+
+    // All requests must specify the type of operation to be executed.
+    optional OperationType operation = 1;
+
+    // The key to get, set or delete.
+    optional string key = 2;
+
+    // The value to put (ignored in all other operations.)
+    optional string value = 3;
+}
+
+// A response intended to be sent from the server to the client.
+message Response {
+    // The key that was operated upon.
+    optional string key = 1;
+
+    // The value from a get operation, if found. Empty for any other operation, or when a the key is not found.
+    optional string value = 2;
+}
