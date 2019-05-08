@@ -25,10 +25,9 @@ public class Database<K, V> {
     /**
      * Creates a new Database.
      *
-     * @param initialSize the initial size of the table.
      */
-    public static Database create(int initialSize) {
-        return new Database(initialSize);
+    public static Database create() {
+        return new Database();
     }
 
     /**
@@ -112,9 +111,9 @@ public class Database<K, V> {
     /**
      * Private constructor.
      */
-    private Database(int initialSize) {
+    Database() {
         // TODO: Implement
-        javaMap = new HashMap<K, V>(initialSize);
+        javaMap = new HashMap<K, V>();
 
     }
 

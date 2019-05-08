@@ -39,6 +39,7 @@ public class ConcurrentServer implements Runnable {
      */
     static class ClientParser implements Runnable {
 
+        private Database db = new Database();
         private final Socket socket;
 
         ClientParser(Socket socket) {
@@ -55,6 +56,8 @@ public class ConcurrentServer implements Runnable {
                 // Parse the client request directly from the socket. Thank you protobuf.
                 DatabaseProtos.Request request = DatabaseProtos.Request.parseDelimitedFrom(socket.getInputStream());
                 System.out.println(String.format("Received request: %s\n", request));
+
+                db.GET(request.getKey());
 
                 // Pretend some heavy lifting is going on.
                 Thread.sleep(5000);

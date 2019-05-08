@@ -22,7 +22,6 @@ In order to re-compile install Protobuf in your system:
 and run the compiler:
 ```
 protoc -I=. --java_out=. src/sfsu/database.proto
-
 ```
 
 When launching a Java process that depends on Protobufs remember to add the JAR file as a project library in IntelliJ or
