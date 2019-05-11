@@ -10,7 +10,7 @@ package sfsu;
 import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 
-public class Database<K, V> {
+public class Database {
 
     // Class member variables.
     Semaphore mutex = new Semaphore(1); //used for reader and write
@@ -18,7 +18,7 @@ public class Database<K, V> {
     int read_count = 0;
 
     // TODO: Implement. Use a java.util.HashMap as the underlying hash table.
-    HashMap<K, V> javaMap;
+    HashMap<String, String> javaMap;
 
     // Public methods
 
@@ -33,7 +33,7 @@ public class Database<K, V> {
     /**
      * Inserts a new value in the hash table.
      */
-    public void PUT(K key, V value) {
+    public void PUT(String key, String value) {
         // TODO: Implement. Writer
         try {
             write.acquire();
@@ -48,7 +48,7 @@ public class Database<K, V> {
     /**
      * Looks for a value with key k. Return null if the value does not exist.
      */
-    public V GET(K k) {
+    public String GET(String k) {
         // TODO: Implement. Reader
         if (javaMap.containsKey(k)) {
             try {
@@ -66,7 +66,7 @@ public class Database<K, V> {
             }
             mutex.release();
 
-            V valueReturned = javaMap.get(k);   //reading is performed
+            String valueReturned = javaMap.get(k);   //reading is performed
 
             try {
                 mutex.acquire();
@@ -92,7 +92,7 @@ public class Database<K, V> {
      *
      * @param k
      */
-    public void DELETE(K k) {
+    public void DELETE(String k) {
         // TODO: Implement. Writer
         if (javaMap.containsKey(k)) {
             try {
@@ -113,7 +113,7 @@ public class Database<K, V> {
      */
     Database() {
         // TODO: Implement
-        javaMap = new HashMap<K, V>();
+        javaMap = new HashMap<String, String>();
 
     }
 

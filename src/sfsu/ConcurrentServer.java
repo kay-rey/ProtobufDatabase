@@ -18,6 +18,7 @@ public class ConcurrentServer implements Runnable {
 
     // The port that this server will bind to.
     private final int port;
+//    private Database database = new Database();
 
     /**
      * Creates a server in the specified port. The server will not start to listen until run is called.
@@ -54,10 +55,15 @@ public class ConcurrentServer implements Runnable {
         public void run() {
             try {
                 // Parse the client request directly from the socket. Thank you protobuf.
+                DatabaseProtos.Response result = DatabaseProtos.Response.newBuilder().build();
                 DatabaseProtos.Request request = DatabaseProtos.Request.parseDelimitedFrom(socket.getInputStream());
                 System.out.println(String.format("Received request: %s\n", request));
 
-                db.GET(request.getKey());
+                DatabaseProtos.Request.OperationType operation = request.getOperation();
+                String key = request.getKey();
+                if (operation == DatabaseProtos.Request.OperationType.GET) {
+                    Object value = db.GET(request.getKey());
+                }
 
                 // Pretend some heavy lifting is going on.
                 Thread.sleep(5000);
