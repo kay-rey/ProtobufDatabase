@@ -10,7 +10,7 @@ package sfsu;
 import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 
-public class Database {
+public class Database<K, V> {
 
     // Class member variables.
     Semaphore mutex = new Semaphore(1); //used for reader and write

@@ -61,19 +61,29 @@ public class ConcurrentServer implements Runnable {
 
                 DatabaseProtos.Request.OperationType operation = request.getOperation();
                 String key = request.getKey();
-                if (operation == DatabaseProtos.Request.OperationType.GET) {
-                    Object value = db.GET(request.getKey());
+                if (operation == DatabaseProtos.Request.OperationType.GET) {    //if operation is GET
+                    String value = db.GET(request.getKey());
+                    result = DatabaseProtos.Response.newBuilder().setValue(value).setKey(key).build();
+                } else if (operation == DatabaseProtos.Request.OperationType.PUT) {
+                    String value = request.getValue();
+                    db.PUT(key, value);
+                    result = DatabaseProtos.Response.newBuilder().setValue(value).setKey(key).build();
+                } else if (operation == DatabaseProtos.Request.OperationType.DELETE) {
+                    db.DELETE(key);
+                    result = DatabaseProtos.Response.newBuilder().setKey(key).build();
                 }
 
                 // Pretend some heavy lifting is going on.
                 Thread.sleep(5000);
 
                 // Create a dummy response and send it to the client.
-                DatabaseProtos.Response response = DatabaseProtos.Response.newBuilder()
-                        .setValue("This is a test value")
-                        .setKey("This is a test key")
-                        .build();
-                response.writeDelimitedTo(socket.getOutputStream());
+//                DatabaseProtos.Response response = DatabaseProtos.Response.newBuilder()
+//                        .setValue("This is a test value")
+//                        .setKey("This is a test key")
+//                        .build();
+
+                result.writeDelimitedTo(socket.getOutputStream());
+                System.out.println("Response type; " + result);
 
                 // This interaction is done. A better server would allow the client to request other things in the same
                 // connection. Not here.

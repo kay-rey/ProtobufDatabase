@@ -6,7 +6,7 @@ import java.net.Socket;
  * Verifies that the database server is able to receive a client request. Prints the response from the server.
  * <p>
  * Invocation and arguments:
- * java -cp lib/*:out/src/sfsu sfsu.DummyTestClient <IP> <port>
+ * java -cp lib/*:out/src/sfsu sfsu.Client <IP> <port>
  */
 public class Client {
 
