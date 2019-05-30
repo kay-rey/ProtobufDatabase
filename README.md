@@ -1,7 +1,6 @@
-# Single threaded and multi threaded network server.
+# Single threaded network server.
 
-Demonstrates a single threaded and a multi threaded network server in Java.
-
+Demonstrates a single threaded network server in Java.
 
 ## Network
 
